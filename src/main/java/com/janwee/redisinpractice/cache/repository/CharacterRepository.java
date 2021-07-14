@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Component
@@ -21,7 +21,12 @@ public class CharacterRepository {
             new Character("Galadriel", "Elf"),
             new Character("Elrond", "Elf"));
 
-    public Set<Character> getAllByKind(String kind) {
-        return list.stream().filter(c -> kind.equals(c.getName())).collect(Collectors.toSet());
+    public List<Character> getAllByKind(String kind) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        return list.stream().filter(c -> kind.equals(c.getKind())).collect(Collectors.toList());
     }
 }

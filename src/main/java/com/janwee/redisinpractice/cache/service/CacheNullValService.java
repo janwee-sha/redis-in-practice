@@ -6,7 +6,7 @@ import com.janwee.redisinpractice.cache.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,10 +20,10 @@ public class CacheNullValService {
         this.repo = repo;
     }
 
-    public Set<String> getNamesOfKind(String kind) {
-        Set<String> names = cache.getNamesByKind(kind);
+    public List<String> getNamesOfKind(String kind) {
+        List<String> names = cache.getNamesByKind(kind);
         if (names == null) {
-            names = repo.getAllByKind(kind).stream().map(Character::getName).collect(Collectors.toSet());
+            names = repo.getAllByKind(kind).stream().map(Character::getName).collect(Collectors.toList());
             String[] arr = new String[names.size()];
             cache.addNamesByKind(kind, names.toArray(arr));
             if (names.isEmpty()) {

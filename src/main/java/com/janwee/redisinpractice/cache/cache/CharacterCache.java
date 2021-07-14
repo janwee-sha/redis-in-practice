@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import redis.clients.jedis.Jedis;
 
-import java.util.Set;
+import java.util.List;
 
 @Repository
 public class CharacterCache {
@@ -15,8 +15,10 @@ public class CharacterCache {
         this.jedis = jedis;
     }
 
-    public Set<String> getNamesByKind(String kind) {
-        return jedis.smembers(kind);
+    public List<String> getNamesByKind(String kind) {
+        List<String> names = jedis.lrange(kind, 0, -1);
+        if (names == null || names.size() == 0) return null;
+        return names;
     }
 
     public void addNamesByKind(String kind, String[] names) {
