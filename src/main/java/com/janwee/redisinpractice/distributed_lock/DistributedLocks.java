@@ -33,7 +33,7 @@ public class DistributedLocks {
 
         long end = System.currentTimeMillis() + acquireTimeout;
         while (System.currentTimeMillis() < end) {
-            if (conn.setnx(PREFIX + lockName, identifier) == 1) {
+            if (conn.setnx(lockKey, identifier) == 1) {
                 conn.expire(lockKey, lockExpire);
                 return identifier;
             }

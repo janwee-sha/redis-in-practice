@@ -3,16 +3,30 @@ package com.janwee.redisinpractice.cache.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.Objects;
 
-@Entity
 @Getter
 @Setter
 public class Character {
-    @Id
     private String name;
-    @Column
     private String kind;
+
+    public Character(String name, String kind) {
+        this.name = name;
+        this.kind = kind;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Character character = (Character) o;
+        return name.equals(character.name) &&
+                kind.equals(character.kind);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, kind);
+    }
 }
