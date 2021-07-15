@@ -53,8 +53,12 @@ class DistributedLocksTest {
     void testReleaseLock() {
         System.out.println("Testing releaseLock");
         String lockName = "testLock";
-        conn.del(PREFIX + lockName);
+        String lockKey = PREFIX + lockName;
+        conn.del(lockKey);
         String identifier = DistributedLocks.acquireLock(conn, lockName, 1000);
-        if (identifier != null) assertTrue(DistributedLocks.releaseLock(conn, lockName, identifier));
+        if (identifier != null) {
+            if (DistributedLocks.releaseLock(conn, lockName, identifier)) assertNull(conn.get(lockKey));
+            else assertNotEquals(identifier, conn.get(lockKey));
+        }
     }
 }
