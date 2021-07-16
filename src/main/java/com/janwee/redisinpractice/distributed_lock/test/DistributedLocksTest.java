@@ -40,10 +40,10 @@ class DistributedLocksTest {
         String lockName = "testLock";
         conn.del(PREFIX + lockName);
         assertNotNull(DistributedLocks.acquireLockWithTimeout(conn, lockName, 1000, 3000));
-        assertNull(DistributedLocks.acquireLockWithTimeout(conn, lockName, 1000, 1000));
+        assertNull(DistributedLocks.acquireLockWithTimeout(conn, lockName, 1000, 3000));
         try {
-            TimeUnit.MILLISECONDS.sleep(1500);
-            assertNotNull(DistributedLocks.acquireLockWithTimeout(conn, lockName, 1000, 1000));
+            TimeUnit.MILLISECONDS.sleep(3000);
+            assertNotNull(DistributedLocks.acquireLockWithTimeout(conn, lockName, 1000, 3000));
         } catch (InterruptedException e) {
             //do nothing
         }
@@ -57,8 +57,8 @@ class DistributedLocksTest {
         conn.del(lockKey);
         String identifier = DistributedLocks.acquireLock(conn, lockName, 1000);
         if (identifier != null) {
-            if (DistributedLocks.releaseLock(conn, lockName, identifier)) assertNull(conn.get(lockKey));
-            else assertNotEquals(identifier, conn.get(lockKey));
+            DistributedLocks.releaseLock(conn, lockName, identifier);
+            assertNotEquals(identifier, conn.get(lockKey));
         }
     }
 }

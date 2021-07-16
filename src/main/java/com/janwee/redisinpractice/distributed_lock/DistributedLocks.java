@@ -2,6 +2,7 @@ package com.janwee.redisinpractice.distributed_lock;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
+import redis.clients.jedis.params.SetParams;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,13 +34,11 @@ public class DistributedLocks {
 
         long end = System.currentTimeMillis() + acquireTimeout;
         while (System.currentTimeMillis() < end) {//检查获取锁的操作是否超时
-            if (conn.setnx(lockKey, identifier) == 1) {
-                //成功获取锁，设置获取到的锁在lockExpire毫秒后自动失效
-                conn.expire(lockKey, lockExpire);
-                return identifier;//
-            }
+            //成功获取锁，设置获取到的锁在lockExpire毫秒后自动失效
+            if ("OK".equals(conn.set(lockKey, identifier, SetParams.setParams().nx().ex(lockExpire))))
+                return identifier;
 
-            //如果锁的键没有自动过期策略，设置自动过期防止获取锁一定会失败
+            //确保锁总是带有超时时间，最终因为超时而被自动释放
             if (conn.ttl(lockKey) == -1) conn.expire(lockKey, lockExpire);
 
             try {

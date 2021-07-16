@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
 @Component
-public class TradeService {
+public class TradeService implements ITradeService{
     private Jedis conn;
 
     @Autowired

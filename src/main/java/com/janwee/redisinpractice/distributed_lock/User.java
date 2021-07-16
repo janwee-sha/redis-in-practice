@@ -1,7 +1,10 @@
 package com.janwee.redisinpractice.distributed_lock;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
+@Getter
 public class User {
     private String userId;
     private int fund;
@@ -34,9 +37,5 @@ public class User {
         if (fund > Integer.MAX_VALUE - amount) return false;
         fund += amount;
         return true;
-    }
-
-    public int getFund() {
-        return fund;
     }
 }
