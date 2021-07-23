@@ -1,10 +1,7 @@
 package com.janwee.redisinpractice.distributed_lock;
 
-import lombok.Getter;
-
 import java.util.Objects;
 
-@Getter
 public class User {
     private String userId;
     private int fund;
@@ -25,6 +22,10 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(userId);
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public boolean subtractMoney(int amount) {

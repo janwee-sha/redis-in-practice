@@ -1,12 +1,7 @@
 package com.janwee.redisinpractice.cache.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Objects;
 
-@Getter
-@Setter
 public class Character {
     private String name;
     private String kind;
@@ -28,5 +23,13 @@ public class Character {
     @Override
     public int hashCode() {
         return Objects.hash(name, kind);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getKind() {
+        return kind;
     }
 }
