@@ -12,13 +12,13 @@ import java.util.Set;
 
 @Configuration
 public class BeanConfig {
-    private static final String HOST1 = "192.168.136.133",
+    private static final String HOST1 = "192.168.234.128",
             HOST2 = "172.19.0.1";
 
     //Client for a single redis node
     @Bean
     public Jedis jedis() {
-        return new Jedis(HOST1, 6385);
+        return new Jedis(HOST1, 6379);
     }
 
     //Client for a redis cluster

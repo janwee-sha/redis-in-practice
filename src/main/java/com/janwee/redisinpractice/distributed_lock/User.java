@@ -39,4 +39,8 @@ public class User {
         fund += amount;
         return true;
     }
+
+    public int getFund() {
+        return fund;
+    }
 }
