@@ -1,4 +1,4 @@
-package com.janwee.redisinpractice.distributed_lock;
+package com.janwee.redisinpractice.trade.domain;
 
 import java.util.Objects;
 
@@ -24,7 +24,7 @@ public class User {
         return Objects.hash(userId);
     }
 
-    public String getUserId() {
+    public String userId() {
         return userId;
     }
 
@@ -40,7 +40,7 @@ public class User {
         return true;
     }
 
-    public int getFund() {
+    public int fund() {
         return fund;
     }
 }

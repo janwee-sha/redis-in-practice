@@ -1,4 +1,4 @@
-package com.janwee.redisinpractice.distributed_lock;
+package com.janwee.redisinpractice.trade.infrastructure.service;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;

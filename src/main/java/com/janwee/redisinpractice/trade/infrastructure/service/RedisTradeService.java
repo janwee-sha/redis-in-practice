@@ -1,15 +1,17 @@
-package com.janwee.redisinpractice.distributed_lock;
+package com.janwee.redisinpractice.trade.infrastructure.service;
 
+import com.janwee.redisinpractice.trade.domain.TradeService;
+import com.janwee.redisinpractice.trade.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
 @Component
-public class TradeService implements ITradeService{
+public class RedisTradeService implements TradeService {
     private Jedis conn;
 
     @Autowired
-    public TradeService(Jedis conn) {
+    public RedisTradeService(Jedis conn) {
         this.conn = conn;
     }
 

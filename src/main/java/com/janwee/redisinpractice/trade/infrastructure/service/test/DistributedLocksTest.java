@@ -1,7 +1,7 @@
-package com.janwee.redisinpractice.distributed_lock.test;
+package com.janwee.redisinpractice.trade.infrastructure.service.test;
 
-import com.janwee.redisinpractice.client.jedis.BeanConfig;
-import com.janwee.redisinpractice.distributed_lock.DistributedLocks;
+import com.janwee.redisinpractice.trade.infrastructure.service.DistributedLocks;
+import com.janwee.redisinpractice.trade.infrastructure.service.JedisConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@ContextConfiguration(classes = {BeanConfig.class})
+@ContextConfiguration(classes = {JedisConfig.class})
 class DistributedLocksTest {
     private static final String PREFIX = "lock:";
     @Autowired

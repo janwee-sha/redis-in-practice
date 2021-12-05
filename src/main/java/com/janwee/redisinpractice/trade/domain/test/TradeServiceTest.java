@@ -1,9 +1,9 @@
-package com.janwee.redisinpractice.distributed_lock.test;
+package com.janwee.redisinpractice.trade.domain.test;
 
-import com.janwee.redisinpractice.distributed_lock.ITradeService;
-import com.janwee.redisinpractice.distributed_lock.OptimizedTradeService;
-import com.janwee.redisinpractice.distributed_lock.TradeService;
-import com.janwee.redisinpractice.distributed_lock.User;
+import com.janwee.redisinpractice.trade.domain.TradeService;
+import com.janwee.redisinpractice.trade.infrastructure.service.OptimizedRedisTradeService;
+import com.janwee.redisinpractice.trade.infrastructure.service.RedisTradeService;
+import com.janwee.redisinpractice.trade.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,21 +13,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class TradeServiceTest {
     @Autowired
-    private TradeService service;
+    private RedisTradeService service;
 
     @Autowired
-    private OptimizedTradeService optimizedService;
+    private OptimizedRedisTradeService optimizedService;
 
-    void test(ITradeService service){
+    void test(TradeService service){
         User fromAcct = new User("1", 10),
                 toAcct = new User("2", 5);
         boolean succeed = service.transferFund(fromAcct, toAcct, 5);
         if (succeed) {
-            assertEquals(10, toAcct.getFund());
-            assertEquals(5, fromAcct.getFund());
+            assertEquals(10, toAcct.fund());
+            assertEquals(5, fromAcct.fund());
         } else {
-            assertEquals(5, toAcct.getFund());
-            assertEquals(10, fromAcct.getFund());
+            assertEquals(5, toAcct.fund());
+            assertEquals(10, fromAcct.fund());
         }
     }
     @Test
