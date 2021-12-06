@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit;
 public class DistributedLocks {
     private static final String PREFIX = "lock:";
 
-    public static String acquireLock(Jedis conn, String lockName, long acquireTimeout) {
+    public static String acquireLock(Jedis conn, String lockName, long acquiringTimeout) {
         String identifier = UUID.randomUUID().toString();//每次获取锁生成唯一标识
 
-        long end = System.currentTimeMillis() + acquireTimeout;
+        long end = System.currentTimeMillis() + acquiringTimeout;
         while (System.currentTimeMillis() < end) {//检查获取锁的操作是否超时
             if (conn.setnx(PREFIX + lockName, identifier) == 1) return identifier;//成功获取锁
 
@@ -27,12 +27,12 @@ public class DistributedLocks {
         return null;//获取锁失败
     }
 
-    public static String acquireLockWithTimeout(Jedis conn, String lockName, long acquireTimeout, long lockTimeout) {
+    public static String acquireLockWithTimeout(Jedis conn, String lockName, long acquiringTimeout, long lockTimeout) {
         String identifier = UUID.randomUUID().toString();//每次获取锁生成唯一标识
         String lockKey = PREFIX + lockName;
         int lockExpire = (int) lockTimeout / 1000;
 
-        long end = System.currentTimeMillis() + acquireTimeout;
+        long end = System.currentTimeMillis() + acquiringTimeout;
         while (System.currentTimeMillis() < end) {//检查获取锁的操作是否超时
             //成功获取锁，设置获取到的锁在lockExpire毫秒后自动失效
             if ("OK".equals(conn.set(lockKey, identifier, SetParams.setParams().nx().ex(lockExpire))))

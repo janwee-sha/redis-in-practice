@@ -2,12 +2,12 @@ package com.janwee.redisinpractice.trade.domain;
 
 import java.util.Objects;
 
-public class User {
-    private String userId;
+public class Account {
+    private String accountId;
     private int fund;
 
-    public User(String userId, int fund) {
-        this.userId = userId;
+    public Account(String accountId, int fund) {
+        this.accountId = accountId;
         this.fund = fund;
     }
 
@@ -15,17 +15,17 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return userId.equals(user.userId);
+        Account user = (Account) o;
+        return accountId.equals(user.accountId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId);
+        return Objects.hash(accountId);
     }
 
-    public String userId() {
-        return userId;
+    public String accountId() {
+        return accountId;
     }
 
     public boolean subtractMoney(int amount) {
