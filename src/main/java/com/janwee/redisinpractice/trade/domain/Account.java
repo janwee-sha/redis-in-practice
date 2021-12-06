@@ -7,6 +7,9 @@ public class Account {
     private int fund;
 
     public Account(String accountId, int fund) {
+        if (fund < 0) {
+            throw new IllegalArgumentException("fund should not be negative.");
+        }
         this.accountId = accountId;
         this.fund = fund;
     }
@@ -29,13 +32,13 @@ public class Account {
     }
 
     public boolean subtractMoney(int amount) {
-        if (fund - amount < 0) return false;
+        if (amount < 0 || amount > fund) return false;
         fund -= amount;
         return true;
     }
 
     public boolean increaseMoney(int amount) {
-        if (fund > Integer.MAX_VALUE - amount) return false;
+        if (amount < 0 || amount > Integer.MAX_VALUE - fund) return false;
         fund += amount;
         return true;
     }
